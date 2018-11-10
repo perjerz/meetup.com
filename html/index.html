@@ -1,0 +1,60 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Meetup - RSVP around the world</title>
+</head>
+<body>
+    <h1 style="margin-bottom: 0; text-align: center">Meetup - RSVP around the world</h1>
+    <!-- map container -->
+	<div id="map"></div>
+	<!-- scripts -->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+	<script src="datamaps.world.min.js"></script>
+	<script src="datamaps.fading-bubbles.js"></script>
+	<script>
+	    // map options
+	    var options = {
+            element: document.getElementById('map'),
+            responsive: true,
+	        fills: {
+	            defaultFill: '#6d65ac'
+	        },
+	        geographyConfig: {
+	            highlightFillColor: 'rgba(109, 101, 172, .8)',
+	            highlightBorderOpacity: 0
+	        },
+	        scope: 'world',
+	        projection: 'equirectangular',
+	    };
+	
+	    // initiate the map
+	    var map = new Datamap(options);
+	
+	    // add the grid behind the globe
+	    map.graticule();
+	                
+	    // add the fading bubbles plugin
+	    map.addPlugin('fadingBubbles', fadingBubbles);
+        
+        // create websocket connection
+        var connection = new WebSocket('ws://stream.meetup.com/2/rsvps');
+        connection.onerror = (err) => {
+            console.error(err);
+        }
+        connection.onmessage = (msg) => {
+            var data = JSON.parse(msg.data);
+            var venue = data.venue;
+            if (venue) {
+                var latitude = venue.lat;
+                var longitude = venue.lon;
+                map.fadingBubbles([{latitude, longitude}]);
+            }
+        }
+        window.addEventListener('resize', function() {
+            map.resize();
+        });
+	</script>
+</body>
+</html>

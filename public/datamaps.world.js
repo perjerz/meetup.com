@@ -177,6 +177,7 @@
   }
 
   function drawSubunits( data ) {
+      console.log(data);
     var fillData = this.options.fills,
         colorCodeData = this.options.data || {},
         geoConfig = this.options.geographyConfig;
@@ -699,7 +700,7 @@
   ***************************************/
 
   function Datamap( options ) {
-
+    console.log(options);
     if ( typeof d3 === 'undefined' || typeof topojson === 'undefined' ) {
       throw new Error('Include d3.js (v3.0.3 or greater) and topojson on this page before creating a new map');
    }

@@ -7,7 +7,7 @@ export interface State {
     newMeetup?: any;
 }
 export const defaultState: State = {
-    newMeetup: { lat: 0.0, lon: 0.0 }
+    newMeetup: { latitude: 0.0, longitude: 0.0 }
 };
 
 interface DOMIntent {
@@ -32,10 +32,10 @@ function model(
         prevState => (prevState === undefined ? defaultState : prevState)
     );
     const updateMeetup: (meetup: any) => Reducer<State> = (meetup) => state => {
-        const { lat, lon } = meetup.venue;
+        const { latitude, longitude } = meetup.venue;
         return {
             ...state,
-            newMeetup: {lat, lon}
+            newMeetup: {latitude, longitude}
         }
     };
     const updateMeetup$ = meetup$.map(updateMeetup)

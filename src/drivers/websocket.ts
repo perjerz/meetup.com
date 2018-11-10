@@ -5,10 +5,10 @@ export default function makeWSDriver(url: string): () => Stream<MessageEvent> {
     return () => { return xs.create<MessageEvent>({
         start: listener => {
             connection.onerror = (err) => {
-            listener.error(err)
+                listener.error(err)
             }
             connection.onmessage = (msg) => {
-            listener.next(msg)
+                listener.next(msg)
             }
         },
         stop: () => {
