@@ -57,9 +57,9 @@ function view(state$: Stream<State>): Stream<VNode> {
                             <b>Meetup name:</b> {event_name}
                         </div>
                         <a href={event_url}>{event_url}</a>
-                        <div style={{ height: '100px', overflow: 'hidden' }}>
+                        {/* <div style={{ height: '100px', overflow: 'hidden' }}>
                             <img src={photo} />
-                        </div>
+                        </div> */}
                         <div>{member_name}</div>
                         <div>Response: {response}</div>
                     </div>
