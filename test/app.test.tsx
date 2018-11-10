@@ -16,38 +16,7 @@ function fakeLocationObj(path: string): any {
 
 describe('app tests', () => {
     it(
-        'should switch page based on url',
-        withTime(Time => {
-            const DOM = mockDOMSource({});
-            const history = Time.diagram('a-b--a--a--b-', {
-                a: '/counter',
-                b: '/speaker'
-            }).map(fakeLocationObj);
-
-            const sinks: any = wrapMain(App)({ DOM, history } as any);
-            const sinksWithState: any = wrapMain(
-                addPrevState(App, {
-                    speaker: { text: 'THIS IS EXPECTED' },
-                    counter: 5
-                })
-            )({ DOM, history } as any);
-
-            const expected$ = Time.diagram('1-2--1--1--2-').map<VNode>(
-                (n: string) => (
-                    <div>
-                        <h2>{`My Awesome Cycle.js app - Page ${n}`}</h2>
-                        <Wildcard />
-                    </div>
-                )
-            );
-
-            Time.assertEqual(sinks.DOM, expected$, assertLooksLike);
-            Time.assertEqual(sinksWithState.DOM, expected$, assertLooksLike);
-        })
-    );
-
-    it(
-        'should redirect to /counter from /',
+        'should redirect to /meetup from /',
         withTime(Time => {
             const DOM = mockDOMSource({});
             const history = Time.diagram('r--r--', {
@@ -57,7 +26,7 @@ describe('app tests', () => {
             const sinks = wrapMain(App)({ DOM, history } as any);
 
             const expected$ = Time.diagram('a--a--', {
-                a: '/counter'
+                a: '/meetup'
             });
 
             Time.assertEqual(sinks.router!, expected$);

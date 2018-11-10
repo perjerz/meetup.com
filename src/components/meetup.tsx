@@ -1,31 +1,23 @@
 import xs, { Stream } from 'xstream';
-import { VNode, DOMSource } from '@cycle/dom';
+import { VNode } from '@cycle/dom';
 
 import { Sources, Sinks, Reducer } from '../interfaces';
 
 export interface State {
-    newMeetup?: { latitude: number; longitude: number };
+    newMeetup?: any;
 }
 export const defaultState: State = {
     newMeetup: undefined
 };
 
-interface DOMIntent {
-    updateMeetups$: Stream<null>;
-    link$: Stream<null>;
-}
-
 export function Meetup({
-    DOM,
     state,
     webSocket: meetup$
 }: Sources<State>): Sinks<State> {
-    const { link$ }: DOMIntent = intent(DOM);
     return {
         DOM: view(state.stream),
         state: model(meetup$),
-        router: redirect(link$),
-        dataMap: updateMap(state.stream)
+        dataMap: updateDatamap(state.stream)
     };
 }
 
@@ -39,7 +31,7 @@ function model(meetup$: Stream<any>): Stream<Reducer<State>> {
             const { lat: latitude, lon: longitude } = venue;
             return {
                 ...state,
-                newMeetup: { latitude, longitude }
+                newMeetup: { ...meetup, latitude, longitude }
             };
         }
         return {
@@ -51,34 +43,38 @@ function model(meetup$: Stream<any>): Stream<Reducer<State>> {
 }
 
 function view(state$: Stream<State>): Stream<VNode> {
-    return state$.map(({ newMeetup }) => (
-        <div>
-            <h2>My Awesome Cycle.js app - Page 3</h2>
-            <div id="map" />
-            <span>{'Meetup: ' + newMeetup}</span>
-            <button type="button" data-action="navigate">
-                Page 1
-            </button>
-        </div>
-    ));
+    return state$.map(({ newMeetup }) => {
+        if (newMeetup) {
+            const {
+                event: { event_name, event_url },
+                member: { member_name, photo },
+                response
+            } = newMeetup;
+            return (
+                newMeetup && (
+                    <div>
+                        <div>
+                            <b>Meetup name:</b> {event_name}
+                        </div>
+                        <a href={event_url}>{event_url}</a>
+                        <div style={{ height: '100px', overflow: 'hidden' }}>
+                            <img src={photo} />
+                        </div>
+                        <div>{member_name}</div>
+                        <div>Response: {response}</div>
+                    </div>
+                )
+            );
+        }
+        return <div />;
+    });
 }
 
-function intent(DOM: DOMSource): DOMIntent {
-    const updateMeetups$ = DOM.select('.add')
-        .events('click')
-        .mapTo(null);
-
-    const link$ = DOM.select('[data-action="navigate"]')
-        .events('click')
-        .mapTo(null);
-
-    return { updateMeetups$, link$ };
-}
-
-function redirect(link$: Stream<any>): Stream<string> {
-    return link$.mapTo('/counter');
-}
-
-function updateMap(newMeetup$: Stream<any>): Stream<any> {
-    return newMeetup$.map(meetup => meetup.newMeetup);
+function updateDatamap(newMeetup$: Stream<any>): Stream<any> {
+    return newMeetup$.map(({ newMeetup: newMeetupLocation }) => {
+        if (newMeetupLocation) {
+            return newMeetupLocation;
+        }
+        return null;
+    });
 }

@@ -5,20 +5,12 @@ import isolate from '@cycle/isolate';
 
 import { driverNames } from '../drivers';
 import { Sources, Sinks, Reducer, Component } from '../interfaces';
-
-import { Counter, State as CounterState } from './counter';
-import { Speaker, State as SpeakerState } from './speaker';
 import { Meetup } from './meetup';
 
-export interface State {
-    counter?: CounterState;
-    speaker?: SpeakerState;
-}
+export interface State {}
 
 export function App(sources: Sources<State>): Sinks<State> {
     const match$ = sources.router.define({
-        '/counter': isolate(Counter, 'counter'),
-        '/speaker': isolate(Speaker, 'speaker'),
         '/meetup': isolate(Meetup, 'meetup')
     });
 

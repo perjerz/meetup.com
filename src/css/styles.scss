@@ -8,3 +8,8 @@ button,
 textarea {
     margin: 0.5em;
 }
+
+#app {
+    z-index: 9999;
+    position: absolute;
+}
