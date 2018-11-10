@@ -1,4 +1,4 @@
-import xs, { Stream } from "xstream";
+import xs, { Stream } from 'xstream';
 
 declare var Datamap: any;
 declare var fadingBubbles: any;
@@ -15,15 +15,14 @@ export default function makeDatamap(meetup$: Stream<any>): void {
             highlightBorderOpacity: 0
         },
         scope: 'world',
-        projection: 'equirectangular',
+        projection: 'equirectangular'
     });
     datamaps.addPlugin('fadingBubbles', fadingBubbles);
     meetup$.addListener({
         next: meetup => {
-            console.log(meetup);
-            if(meetup) {
+            if (meetup) {
                 datamaps.fadingBubbles([meetup]);
             }
         }
     });
-  }
+}

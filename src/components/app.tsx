@@ -33,7 +33,7 @@ export function App(sources: Sources<State>): Sinks<State> {
 
     const redirect$: Stream<string> = sources.router.history$
         .filter((l: Location) => l.pathname === '/')
-        .mapTo('/counter');
+        .mapTo('/meetup');
 
     const sinks = extractSinks(componentSinks$, driverNames);
     return {
