@@ -5,19 +5,17 @@ declare var fadingBubbles: any;
 
 export default function makeDatamap(meetup$: Stream<any>): void {
     const datamaps = new Datamap({
-        scope: 'World',
         element: document.getElementById('map'),
-        projection: 'equirectangular',
-        height: 500,
+        responsive: true,
         fills: {
-        defaultFill: '#F1EBF4',
-            lt50: 'rgba(0,244,244,0.9)',
-            gt50: '#20438A',
+            defaultFill: '#6d65ac'
         },
         geographyConfig: {
-            highlightFillColor: '#bfdfec',
-            highlightBorderColor: 'white',
-        }
+            highlightFillColor: 'rgba(109, 101, 172, .8)',
+            highlightBorderOpacity: 0
+        },
+        scope: 'world',
+        projection: 'equirectangular',
     });
     datamaps.addPlugin('fadingBubbles', fadingBubbles);
     meetup$.addListener({
