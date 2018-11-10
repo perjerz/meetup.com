@@ -44,7 +44,7 @@
 	    map.addPlugin('fadingBubbles', fadingBubbles);
         
         // create websocket connection
-        var connection = new WebSocket('ws://stream.meetup.com/2/rsvps');
+        var connection = new WebSocket('wss://stream.meetup.com/2/rsvps');
         connection.onerror = (err) => {
             console.error(err);
         }
