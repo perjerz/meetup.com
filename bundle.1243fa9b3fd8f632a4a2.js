@@ -6073,7 +6073,7 @@
                 },
                 webSocket: function() {
                     return (
-                        (t = new WebSocket('ws://stream.meetup.com/2/rsvps')),
+                        (t = new WebSocket('wss://stream.meetup.com/2/rsvps')),
                         function() {
                             return o.a
                                 .create({
