@@ -6,14 +6,12 @@ import { routerify } from 'cyclic-router';
 import switchPath from 'switch-path';
 
 import { Component } from './interfaces';
-import speechDriver from './drivers/speech';
 import makeWSDriver from './drivers/websocket';
 import makeDatamap from './drivers/datamaps';
 
 const driversFactories: any = {
     DOM: () => makeDOMDriver('#app'),
     history: () => makeHistoryDriver(),
-    speech: () => speechDriver,
     dataMap: () => makeDatamap,
     webSocket: () => makeWSDriver('wss://stream.meetup.com/2/rsvps')
 };
