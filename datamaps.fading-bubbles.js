@@ -3,7 +3,7 @@ fadingBubbles = function(layer, data){
     // the datamap instance
     var self = this,
         className = 'fadingBubble',
-        defaultColor = 'orange';
+        defaultColor = 'red';
     
     // bind the data
     var bubbles = layer
