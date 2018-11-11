@@ -45,7 +45,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "scripts": {
-    "start": "scross-env NODE_ENV=development webpack-dev-server --config configs/webpack.config.js",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --config configs/webpack.config.js",
     "test": "cross-env NODE_ENV=test nyc mocha-webpack --colors --webpack-config configs/webpack.config.js test/**/*.test.{js,jsx,ts,tsx}",
     "build": "cross-env NODE_ENV=production webpack --config configs/webpack.config.js",
     "build:gh": "npm run build --baseHref=/meetup.com/",
