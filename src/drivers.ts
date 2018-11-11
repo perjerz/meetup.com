@@ -15,7 +15,7 @@ const driversFactories: any = {
     history: () => makeHistoryDriver(),
     speech: () => speechDriver,
     dataMap: () => makeDatamap,
-    webSocket: () => makeWSDriver('ws://stream.meetup.com/2/rsvps')
+    webSocket: () => makeWSDriver('wss://stream.meetup.com/2/rsvps')
 };
 
 export function getDrivers(): any {
