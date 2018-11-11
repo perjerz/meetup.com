@@ -1,0 +1,5 @@
+node_modules/
+.gitingore
+package.json
+build
+datamaps.world.js
