@@ -50,7 +50,7 @@
     "build": "cross-env NODE_ENV=production webpack --config configs/webpack.config.js",
     "build:gh": "npm run build --baseHref=/meetup.com/",
     "clean": "rimraf build .nyc_output coverage",
-    "deploy:gh": "npm run build:gh && git checkout gh-pages && git rm -rf ./ && cp build/* ./ && git commit -m \"Deploy to Github Pages\" && git push origin gh-pages && git checkout master"
+    "deploy:gh": "npm run build:gh && git checkout gh-pages && git rm -rf ./ && cp build/* ./ && git commit -m \"Deploy to Github Pages\" && git push origin gh-pages && git checkout master && git clean -f"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
