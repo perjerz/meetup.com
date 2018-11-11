@@ -1,3 +1,4 @@
+const { BaseHrefWebpackPlugin } = require('base-href-webpack-plugin');
 const {
     createConfig,
     match,
@@ -36,7 +37,7 @@ const userConfig = require(appPath('webpack.config.js'));
 const packageJson = require(appPath('package.json'));
 
 const PORT = process.env.PORT || 8080;
-
+console.log(process.env.npm_config_baseHref);
 module.exports = webpackMerge(
     createConfig([
         setMode(
@@ -77,6 +78,9 @@ module.exports = webpackMerge(
                 inject: true,
                 favicon: 'public/favicon.png',
                 hash: true
+            }),
+            new BaseHrefWebpackPlugin({
+                baseHref: process.env.npm_config_baseHref
             }),
             new HtmlWebpackHarddiskPlugin({
                 outputPath: appPath('public')
