@@ -1,3 +1,6 @@
+# Meetup - RSVP around the world using CycleJS, WebSocket, Datamaps
+http://www.zp11108.tld.122.155.17.167.no-domain.name
+
 ## Your amazing project
 
 Thanks for using the `one-fits-all` flavor.

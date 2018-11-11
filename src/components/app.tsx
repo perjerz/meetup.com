@@ -10,7 +10,7 @@ export interface State {}
 
 export function App(sources: Sources<State>): Sinks<State> {
     const match$ = sources.router.define({
-        '/meetup': isolate(Meetup, 'meetup')
+        '/': Meetup
     });
 
     const componentSinks$: Stream<Sinks<State>> = match$
@@ -22,13 +22,9 @@ export function App(sources: Sources<State>): Sinks<State> {
             });
         });
 
-    const redirect$: Stream<string> = sources.router.history$
-        .filter((l: Location) => l.pathname === '/')
-        .mapTo('/meetup');
-
     const sinks = extractSinks(componentSinks$, driverNames);
     return {
         ...sinks,
-        router: xs.merge(redirect$, sinks.router)
+        router: xs.merge(xs.of('/'), sinks.router)
     };
 }
